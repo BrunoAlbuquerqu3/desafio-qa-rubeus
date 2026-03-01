@@ -19,33 +19,37 @@ A suíte de testes valida a integridade das URLs principais e o fluxo de comunic
 
 ## 🔍 Análise Crítica de Qualidade (UX/UI)
 
-Como Analista de Qualidade, realizei uma inspeção manual minuciosa focada na jornada do usuário. Abaixo, os principais achados divididos por impacto:
+Como Analista de Qualidade, realizei uma inspeção manual detalhada em ambos os ambientes fornecidos. Abaixo, os achados divididos por impacto e localização:
 
-### 🔴 Impacto Crítico (Bloqueadores)
-| Local | Problema | Impacto no Negócio |
-| :--- | :--- | :--- |
-| `/certificacao` | Erro não informativo ao tentar avançar para Fase 2. | **Abandono de Lead:** O usuário não consegue finalizar a inscrição. |
-| `/certificacao` | Falha na máscara de Telefone (> 11 dígitos). | **Integridade de Dados:** Inserção de dados "sujos" no banco/CRM. |
+### 🔴 Impacto Crítico e Funcional (/certificacao)
+| Problema Identificado | Impacto no Negócio |
+| :--- | :--- |
+| **Erro impeditivo na Fase 2:** Notificação pouco informativa impede o avanço do cadastro. | **Abandono de Lead:** O usuário desiste da inscrição por falta de feedback claro. |
+| **Falha na Máscara de Telefone:** Perda de formatação após o 11º dígito. | **Integridade de Dados:** Inserção de dados inconsistentes no banco/CRM. |
+| **Lacuna de Conteúdo:** Seção "Para quem é?" sem preenchimento ou storytelling. | **Baixo Engajamento:** Perda de oportunidade de qualificar o lead. |
 
-### 🟡 Impacto de Usabilidade e Interface (UX/UI)
-* **Hierarquia Visual (Site):** Elementos como "Inscrever-se" e "Falar com Consultor" carecem de propriedades de botão (CTA), reduzindo o incentivo ao clique.
-* **Acessibilidade:** Ícones com baixo contraste e fontes que poderiam ser otimizadas para melhor legibilidade.
-* **Design System:** Imagens com proporção distorcida (aspect-ratio) na página de certificação, afetando a credibilidade visual da marca.
-* **Engajamento:** Falha na automação do carrossel no site principal; sugere-se transição automática para exposição de novos conteúdos.
+### 🟡 Melhorias de Usabilidade e Interface (/site)
+Baseado na análise visual e de navegação do site institucional:
+
+* **CTAs Ineficientes:** Elementos como "Inscrever-se" e "Falar com Consultor" carecem de propriedades visuais de botão (cores chamativas/sombra), não induzindo o usuário ao clique.
+* **Carrossel Estático:** O banner principal não possui rolagem automática, limitando a exposição de diferentes ofertas/valores.
+* **Acessibilidade e Contraste:** Ícones apagados e fontes com baixa legibilidade dificultam a navegação.
+* **Canais de Contato:** A opção "Fale Conosco" está escondida; sugere-se o uso de um ícone flutuante de WhatsApp para maior visibilidade.
+* **Design System:** Imagens com proporção distorcida (achatadas) e ausência de bordas arredondadas nos cards, o que confere um aspecto datado à interface.
 
 ---
 
 ## 🗄️ Validação de Backend & Banco de Dados
 Para uma cobertura **End-to-End (E2E)** real, minha estratégia contempla a validação da camada de persistência (SQL):
 1.  **Integridade:** Garantir que o `INSERT` no banco reflita exatamente o que foi preenchido no formulário.
-2.  **Sanitização:** Validar via script (PyMySQL/SQLAlchemy) se caracteres especiais ou máscaras de telefone estão sendo tratadas corretamente antes do armazenamento.
+2.  **Sanitização:** Validar via script se máscaras de telefone e campos sem limite de caracteres (identificados no site) são tratados antes do armazenamento.
 
 ---
 
 ## 🚀 Como rodar o projeto localmente
-1.  Clone o repositório.
-2.  Instale as dependências: `pip install -r requirements.txt`
-3.  Instale os binários do navegador: `playwright install chromium`
-4.  Execute os testes e gere o relatório:
-```bash
-pytest --headed --html=report.html --self-contained-html
+1.  `pip install -r requirements.txt`
+2.  `playwright install chromium`
+3.  `pytest --headed --html=report.html --self-contained-html`
+
+---
+**Candidato:** Bruno Albuquerque
